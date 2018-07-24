@@ -1,0 +1,19 @@
+{
+  "name": "statuscheck",
+  "version": "1.0.0",
+  "private": true,
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "start": "forever start index.js",
+    "list": "forever list"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "chalk": "^2.4.1",
+    "forever": "^0.15.3",
+    "iftttmaker": "^1.3.0",
+    "puppeteer": "^1.5.0"
+  }
+}

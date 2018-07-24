@@ -1,0 +1,30 @@
+# compiled output
+/dist
+/tmp
+*.pyc
+tags
+
+# dependencies
+/node_modules
+/bower_components
+
+# misc
+/.idea
+/.sass-cache
+/connect.lock
+/libpeerconnection.log
+npm-debug.log
+testem.log
+.vscode/
+.vscodeignore
+jsconfig.json
+typings/
+
+#os generated
+.DS_Store
+Thumbs.db
+
+package-lock.json
+yarn.lock
+
+.env
