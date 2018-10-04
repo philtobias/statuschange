@@ -12,6 +12,27 @@ const {
   NOTIFY_ON_FAILURE } = process.env;
 const IFTTTMaker = require('iftttmaker')(IFTTT_API_KEY);
 
+async sendIFFFTMakerRequest(isSuccess) {
+  const eventType = isSuccess ?  : IFTTT_FAILURE_EVENT;
+  const message = isSuccess ? 'success' : 'failure';
+
+  if(isSuccess && NOTIFY_ON_SUCCESS) {
+    try {
+      await IFTTTMaker.send(IFTTT_SUCCESS_EVENT);
+      console.log(`${message} notification was sent`);
+    } catch(error) {
+      console.log(`The {$message} notification could not be sent:`, error);
+    }
+  } else if(NOTIFY_ON_FAILURE) {
+    try {
+      await IFTTTMaker.send(IFTTT_FAILURE_EVENT)
+      console.log('Failure notification was sent');
+    } catch(error) {
+      console.log('The failure notification could not be sent:', error);
+    };
+  }
+}
+
 console.log(`${TITLE} job ran at ${new Date()}`);
 (async () => {
   const browser = await puppeteer.launch();
@@ -23,18 +44,5 @@ console.log(`${TITLE} job ran at ${new Date()}`);
   }, SELECTOR, SELECTOR_CLASS);
 
   await browser.close();
-
-  if(isSuccess && NOTIFY_ON_SUCCESS) {
-    IFTTTMaker.send(IFTTT_SUCCESS_EVENT).then(function () {
-      console.log('Success notification was sent');
-    }).catch(function (error) {
-      console.log('The success notification could not be sent:', error);
-    });
-  } else if(NOTIFY_ON_FAILURE) {
-    IFTTTMaker.send(IFTTT_FAILURE_EVENT).then(function () {
-      console.log('Failure notification was sent');
-    }).catch(function (error) {
-      console.log('The failure notification could not be sent:', error);
-    });
-  }
+  await sendIFFFTMakerRequest(isSuccess);
 })();
